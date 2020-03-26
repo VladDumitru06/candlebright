@@ -6,12 +6,12 @@ public class CharacterMovement : MonoBehaviour
 {
     CharacterController Controller;
     [SerializeField] private float playerSpeed = 10f;
+    [SerializeField] private Canvas endtext;
     private float movementSpeed;
     private bool jump = false;
     void Start()
     {
         Controller = GetComponent<CharacterController>();
-            
     }
     private void Update()
     {
@@ -41,6 +41,13 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Controller.Move(movementSpeed, false, jump);
+        if (this.transform.localScale.y <= .1f)
+        {
+            endtext.enabled = true;
+        }
+        else
+        {
+            Controller.Move(movementSpeed, false, jump);
+        }
     }
 }
