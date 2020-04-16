@@ -15,8 +15,8 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
+  - SpiderRope
+  - Player
   - 
   - 
   - 
@@ -50,4 +50,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3780288603
+    locked: 0
+  - name: Rope
+    uniqueID: 3658095917
     locked: 0
