@@ -21,7 +21,6 @@ public class CharacterMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.A)) // Right
             {
                 movementSpeed = playerSpeed * -1;
-                Debug.Log(movementSpeed);
             }
             else if (Input.GetKey(KeyCode.D)) // Left
             {
@@ -46,7 +45,6 @@ public class CharacterMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow)) // Right
             {
                 movementSpeed = playerSpeed * -1;
-                Debug.Log(movementSpeed);
             }
             else if (Input.GetKey(KeyCode.RightArrow)) // Left
             {
