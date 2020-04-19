@@ -12,10 +12,12 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] SpiderRope SpiderRope;
     [SerializeField] Animator FireAnimator;
     [SerializeField] CharacterLightController CharacterLight;
+    CharacterDeathController DeathController;
     private float movementSpeed;
     private bool jump = false;
     void Start()
     {
+        DeathController = GetComponent<CharacterDeathController>();
         Controller = GetComponent<CharacterController>();
     }
     private void Update()
@@ -154,8 +156,8 @@ public class CharacterMovement : MonoBehaviour
                 FireAnimator.SetBool("IsIdle", false);
 
             }
-
-            Controller.Move(movementSpeed, false, jump,PlayerNr);
+            if(DeathController.IsDead == false)
+                Controller.Move(movementSpeed, false, jump,PlayerNr);
         }
     }
 }
