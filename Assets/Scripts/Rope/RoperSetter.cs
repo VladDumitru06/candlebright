@@ -10,17 +10,18 @@ public class RoperSetter : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
 
         if (Input.GetMouseButtonDown(0))
         {
+
               Vector2 worldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                rope.setStart(worldpos);
         }
         if (Input.GetMouseButtonUp(0))
         {
+
             rope.DestroyRope();
         }
     }

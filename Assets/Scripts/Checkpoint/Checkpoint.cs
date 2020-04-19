@@ -14,11 +14,11 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.tag);
-        if (collision.CompareTag("Player1"))
+        if (collision.CompareTag("Player1")) //Player1 is found and his checkpoint location is updated
         {
             CM.lastCheckPointPosP1 = transform.position;
         }
-        if (collision.CompareTag("Player2"))
+        if (collision.CompareTag("Player2"))//Same thing
         {
             CM.lastCheckPointPosP2 = transform.position;
         }

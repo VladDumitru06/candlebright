@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Low Fidelity Demo.unity
+- path: Assets/Scenes/AnimationScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

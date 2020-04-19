@@ -8,6 +8,10 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private Canvas endtext;
     [SerializeField] private int PlayerNr;
+    [SerializeField] private Animator Animator;
+    [SerializeField] SpiderRope SpiderRope;
+    [SerializeField] Animator FireAnimator;
+    [SerializeField] CharacterLightController CharacterLight;
     private float movementSpeed;
     private bool jump = false;
     void Start()
@@ -17,22 +21,26 @@ public class CharacterMovement : MonoBehaviour
     private void Update()
     {
         if (PlayerNr == 1)
-        {
-            if (Input.GetKey(KeyCode.A)) // Right
+        { 
+            if (Input.GetKey(KeyCode.A)) // Left
             {
+
                 movementSpeed = playerSpeed * -1;
             }
-            else if (Input.GetKey(KeyCode.D)) // Left
+            else if (Input.GetKey(KeyCode.D)) // Right
             {
+
                 movementSpeed = playerSpeed;
             }
-            else
+            else if (!Input.GetKey(KeyCode.W))
             {
+
                 movementSpeed = 0;
             }
 
             if (Input.GetKey(KeyCode.W))
             {
+
                 jump = true;
             }
             else
@@ -42,11 +50,11 @@ public class CharacterMovement : MonoBehaviour
         }
         else if(PlayerNr == 2)
                 {
-            if (Input.GetKey(KeyCode.LeftArrow)) // Right
+            if (Input.GetKey(KeyCode.LeftArrow)) // Left
             {
                 movementSpeed = playerSpeed * -1;
             }
-            else if (Input.GetKey(KeyCode.RightArrow)) // Left
+            else if (Input.GetKey(KeyCode.RightArrow)) // Right
             {
                 movementSpeed = playerSpeed;
             }
@@ -76,6 +84,77 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+
+            //Check if the player is running
+            if (movementSpeed != 0 && jump == false && Controller.M_Grounded == true)
+            {
+                //Fire
+                FireAnimator.SetBool("IsBursting", false);
+                FireAnimator.SetBool("IsRunning", true);
+                FireAnimator.SetBool("IsJumping", false);
+                FireAnimator.SetBool("IsIdle", false);
+
+                //Body
+                Animator.SetBool("IsRunning", true);
+                Animator.SetBool("IsIdle", false);
+                Animator.SetBool("IsJumping", false);
+                Animator.SetBool("IsSwinging", false);
+            }
+            //Check if the player is jumping/if the player is in the air
+            else if ((jump == true) || (movementSpeed == 0 && Controller.M_Grounded == false && SpiderRope.IsSwinging == false))
+            {
+                //Fire
+                FireAnimator.SetBool("IsBursting", false);
+                FireAnimator.SetBool("IsRunning", false);
+                FireAnimator.SetBool("IsJumping", true);
+                FireAnimator.SetBool("IsIdle", false);
+
+                //Body
+                Animator.SetBool("IsRunning", false);
+                Animator.SetBool("IsIdle", false);
+                Animator.SetBool("IsJumping", true);
+                Animator.SetBool("IsSwinging", false);
+            }
+            //check if the player is idle on the ground
+            if(movementSpeed == 0 && jump == false && Controller.M_Grounded == true && SpiderRope.IsSwinging == false)
+            {
+                //Fire
+                FireAnimator.SetBool("IsBursting", false);
+                FireAnimator.SetBool("IsRunning", false);
+                FireAnimator.SetBool("IsJumping", false);
+                FireAnimator.SetBool("IsIdle", true);
+
+                //Body
+                Animator.SetBool("IsRunning", false);
+                Animator.SetBool("IsIdle", true);
+                Animator.SetBool("IsJumping", false);
+                Animator.SetBool("IsSwinging", false);
+            }
+            //Check if the player is swinging
+            if(SpiderRope.IsSwinging == true)
+            {
+                //Fire
+                FireAnimator.SetBool("IsBursting", false);
+                FireAnimator.SetBool("IsRunning", false);
+                FireAnimator.SetBool("IsJumping", true);
+                FireAnimator.SetBool("IsIdle", false);
+
+                //Body
+                Animator.SetBool("IsRunning", false);
+                Animator.SetBool("IsIdle", false);
+                Animator.SetBool("IsJumping", false);
+                Animator.SetBool("IsSwinging", true);
+            }
+            if(CharacterLight.IsBursting == true)
+            {                
+                //Fire
+                FireAnimator.SetBool("IsBursting", true);
+                FireAnimator.SetBool("IsRunning", false);
+                FireAnimator.SetBool("IsJumping", false);
+                FireAnimator.SetBool("IsIdle", false);
+
+            }
+
             Controller.Move(movementSpeed, false, jump,PlayerNr);
         }
     }
