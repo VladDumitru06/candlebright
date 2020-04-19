@@ -12,17 +12,19 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
     [SerializeField] public int playerNr;
+    [SerializeField] private GameObject FatherObject;
     const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 m_Velocity = Vector3.zero;
-
+    private CheckpointManager CM;
     [Header("Events")]
     [Space]
 
     public UnityEvent OnLandEvent;
+    public bool M_Grounded { get { return m_Grounded; } }
     public int PlayerNr { get { return playerNr; } }
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
@@ -32,6 +34,7 @@ public class CharacterController : MonoBehaviour
 
     private void Awake()
     {
+        CM = GameObject.FindGameObjectWithTag("CM").GetComponent<CheckpointManager>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         if (OnLandEvent == null)
@@ -60,7 +63,13 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-
+    public void Death()
+    {
+        if (PlayerNr == 1)
+            FatherObject.transform.position = CM.lastCheckPointPosP1;
+        if (PlayerNr == 2)
+            FatherObject.transform.position = CM.lastCheckPointPosP2;
+    }
     public void Move(float move, bool crouch, bool jump, int PlayerNr)
     {
         if (PlayerNr == this.playerNr)
