@@ -35,62 +35,47 @@ public class CharacterLightController : MonoBehaviour
     void FixedUpdate()
     {
         if (CharacterController.PlayerNr == 1)
-        { 
-        if (Input.GetKey(KeyCode.E) && Candle.transform.localScale.y >= .1f)
         {
+            if (Input.GetKey(KeyCode.E) && Candle.transform.localScale.y >= .1f)
+            {
                 isBursting = true;
-                 //light scale
-                pointlight.transform.localScale = new Vector3(2f,  (2f / Candle.transform.localScale.y));
+                //light scale
+                pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
 
                 resizeTimer += Time.deltaTime;
-                if(resizeTimer >= 0.018f)//resize each 0.02 seconds
+                if (resizeTimer >= 0.018f)//resize each 0.02 seconds
                 {
-                    
-
                     resizeTimer = 0f;
                     Candle.transform.localScale = new Vector3(Candle.transform.localScale.x, Candle.transform.localScale.y - resizePerFrameValue, Candle.transform.localScale.z);
                 }
             }
-        else
-        {
+            else
+            {
                 isBursting = false;
                 pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
-        }
-        if (Input.GetKey(KeyCode.R))
-        {
-            //    pointlight.transform.localScale = new Vector3(1, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
-              //  Candle.transform.localScale = new Vector3(Candle.transform.localScale.x, 1, Candle.transform.localScale.z);
-        }
-        if (this.transform.localScale.y <= .1f)
-        {
-            
-        }
+            }
         }
         if (CharacterController.PlayerNr == 2)
         {
             if (Input.GetKey(KeyCode.Space) && Candle.transform.localScale.y >= .1f)
             {
-                pointlight.transform.localScale = new Vector3(2f, (2f / this.transform.localScale.y));
-                Debug.Log("Point " + pointlight.transform.localScale.y);
-                // light.transform.localScale = new Vector3(this.transform.localScale.y, 1, this.light.transform.localScale.z);
-                Candle.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y - resizeSpeed, this.transform.localScale.z);
+                isBursting = true;
+                //light scale
+                pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
 
+                resizeTimer += Time.deltaTime;
+                if (resizeTimer >= 0.018f)//resize each 0.02 seconds
+                {
+                    resizeTimer = 0f;
+                    Candle.transform.localScale = new Vector3(Candle.transform.localScale.x, Candle.transform.localScale.y - resizePerFrameValue, Candle.transform.localScale.z);
+                }
             }
             else
             {
-                pointlight.transform.localScale = new Vector3(this.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
+                isBursting = false;
+                pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
             }
-            if (Input.GetKey(KeyCode.LeftAlt))
-            {
-                this.transform.position = new Vector3(-5, 1, this.transform.position.z);
-                endtext.enabled = false;
-                pointlight.transform.localScale = new Vector3(1, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
-                Candle.transform.localScale = new Vector3(this.transform.localScale.x, 1, this.transform.localScale.z);
-            }
-            if (this.transform.localScale.y <= .1f)
-            {
-
-            }
+           
         }
     }
 }
