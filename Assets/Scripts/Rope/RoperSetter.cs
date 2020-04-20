@@ -5,9 +5,10 @@ using UnityEngine;
 public class RoperSetter : MonoBehaviour
 {
     public SpiderRope rope;
+    private CharacterDeathController CDC;
     void Start()
     {
-        
+        CDC = GetComponent<CharacterDeathController>();
     }
 
     void Update()
