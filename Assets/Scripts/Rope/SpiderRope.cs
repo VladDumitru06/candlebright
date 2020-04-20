@@ -49,7 +49,7 @@ public class SpiderRope : MonoBehaviour
             timer = null;
         }
     }
-    void Update()
+    void FixedUpdate()
     {
         if (!update)
         {

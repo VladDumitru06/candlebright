@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5803773247468156070}
   m_Layer: 9
-  m_Name: RopeP1 1 1
+  m_Name: OriginalHookP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7573830380095235309}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.9851406, y: 7.0384884, z: -6.9979978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
