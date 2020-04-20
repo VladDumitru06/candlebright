@@ -8,10 +8,11 @@ public class SpiderRope : MonoBehaviour
     [SerializeField] float stayTime = 1f;// Time until the hook breaks
     [SerializeField] public Material mat; // the material of the rope
     [SerializeField] public Rigidbody2D Player; // The Rigidbody of the player (pivot point at feet)
-    [SerializeField] Rigidbody2D origin;// The Rigidbody of The CellingCheck GameObject attached to the head of the Player (for shooting web out of )
+    [SerializeField] GameObject origin;// The Rigidbody of The CellingCheck GameObject attached to the head of the Player (for shooting web out of )
     [SerializeField] float line_width = .1f;// the width of the line
     [SerializeField] float speed = 25;// the speed the rope is shot with
     [SerializeField] float pull_force = 3f;// the force the rope pulls the Player
+    public bool IsSwinging;
     private LineRenderer line;// the Line itself
     private float pull_force_temp;// Temporary pull force to increase while hook is attached
     private Vector3 velocity; // the velocity of the gameobject
@@ -34,10 +35,11 @@ public class SpiderRope : MonoBehaviour
 
     public void setStart(Vector2 targetPos)//Set the starting position of the hook and the timer
     {
-        Vector2 dir = (targetPos - origin.position); // get direction
+        Vector2 dir = (targetPos - new Vector2( origin.transform.position.x, origin.transform.position.y)); // get direction
         dir = dir.normalized;
         velocity = dir * speed;
-        transform.position = origin.position + dir; //shot first direction
+        transform.position = new Vector2(origin.transform.position.x, origin.transform.position.y) + dir; //shot first direction
+        IsSwinging = true;
         pull = false;//don't pull you, not grabed to anything
         update = true;//start update function
 
@@ -47,22 +49,23 @@ public class SpiderRope : MonoBehaviour
             timer = null;
         }
     }
-    void Update()
+    void FixedUpdate()
     {
         if (!update)
         {
             return;//do nothing
                
         }
-        float distance = Vector2.Distance(transform.position, origin.position);//distance from the target to the head of the characther
+        float distance = Vector2.Distance(transform.position, new Vector2(origin.transform.position.x, origin.transform.position.y));//distance from the target to the head of the characther
         if (pull)
         {
-            Vector2 dir = (Vector2)transform.position - origin.position;//direction to pull towards
+            Vector2 dir = (Vector2)transform.position - new Vector2(origin.transform.position.x, origin.transform.position.y);//direction to pull towards
             pull_force_temp += Time.deltaTime;//increas pull force
                 Player.AddForce(dir * pull_force_temp);// apply pull force
         }
         else
         {
+
             transform.position += velocity * Time.deltaTime; // shoot the rope
             
             if (distance > maxropesize) // check for distance so rope doesn't shoot for infinity and make the rope dissapear
@@ -74,7 +77,7 @@ public class SpiderRope : MonoBehaviour
             }
         }
         line.SetPosition(0, transform.position);
-        line.SetPosition(1, origin.position);
+        line.SetPosition(1, new Vector2(origin.transform.position.x, origin.transform.position.y));
     }
     IEnumerator reset (float delay)
     {
@@ -83,9 +86,11 @@ public class SpiderRope : MonoBehaviour
             line.SetPosition(0, Vector2.zero);
             line.SetPosition(1, Vector2.zero);
             TriggerStay = false;
+            IsSwinging = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.name);
         velocity = Vector2.zero; // Attach to the object it collided with
         pull = true;
         timer = reset(stayTime);
@@ -112,5 +117,6 @@ public class SpiderRope : MonoBehaviour
         line.SetPosition(1, Vector2.zero);
         TriggerStay = false;
         StopAllCoroutines();
+        IsSwinging = false;
     }
 }
