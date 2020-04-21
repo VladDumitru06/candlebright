@@ -16,8 +16,10 @@ public class CharacterMovement : MonoBehaviour
     CharacterDeathController DeathController;
     private float movementSpeed;
     private bool jump = false;
+    private bool CanUseWax;
     void Start()
     {
+        CanUseWax = true;
         DeathController = GetComponent<CharacterDeathController>();
         Controller = GetComponent<CharacterController>();
     }
@@ -57,20 +59,18 @@ public class CharacterMovement : MonoBehaviour
         }
         else if(PlayerNr == 2)
                 {
-            if (Input.GetKey(KeyCode.LeftArrow)) // Left
+            Debug.Log(Input.GetAxis("VerticalMove") + " " + Input.GetAxis("HorizontalMove") + " " + Input.GetButton("UseWax") + " " + Input.GetAxis("Burst") + " " + Input.GetAxis("ShootHook"));
+
+            if (Input.GetAxis("HorizontalMove") > 0.2 || Input.GetAxis("HorizontalMove") < 0.2) // Left
             {
-                movementSpeed = playerSpeed * -1;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow)) // Right
-            {
-                movementSpeed = playerSpeed;
+                movementSpeed = playerSpeed * Input.GetAxis("HorizontalMove");
             }
             else
             {
                 movementSpeed = 0;
             }
 
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetAxis("VerticalMove") > 0.2 )
             {
                 jump = true;
             }
@@ -78,10 +78,16 @@ public class CharacterMovement : MonoBehaviour
             {
                 jump = false;
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetButton("UseWax") && CanUseWax == true)
             {
                 WaxController.UseWax();
+                CanUseWax = false;
             }
+            if (!Input.GetButton("UseWax") && CanUseWax == false)
+            {
+                CanUseWax = true;
+            }
+
         }
         
        

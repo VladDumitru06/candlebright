@@ -57,7 +57,7 @@ public class CharacterLightController : MonoBehaviour
         }
         if (CharacterController.PlayerNr == 2)
         {
-            if (Input.GetKey(KeyCode.Space) && Candle.transform.localScale.y >= .1f)
+            if (Input.GetAxis("Burst") == 1 && Candle.transform.localScale.y >= .1f)
             {
                 isBursting = true;
                 //light scale
