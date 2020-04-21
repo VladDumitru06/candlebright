@@ -12,6 +12,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] SpiderRope SpiderRope;
     [SerializeField] Animator FireAnimator;
     [SerializeField] CharacterLightController CharacterLight;
+    [SerializeField] WaxController WaxController;
     CharacterDeathController DeathController;
     private float movementSpeed;
     private bool jump = false;
@@ -49,6 +50,10 @@ public class CharacterMovement : MonoBehaviour
             {
                 jump = false;
             }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                WaxController.UseWax();
+            }
         }
         else if(PlayerNr == 2)
                 {
@@ -72,6 +77,10 @@ public class CharacterMovement : MonoBehaviour
             else
             {
                 jump = false;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                WaxController.UseWax();
             }
         }
         
