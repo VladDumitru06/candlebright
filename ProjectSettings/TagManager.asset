@@ -8,6 +8,8 @@ TagManager:
   - CM
   - Player1
   - Player2
+  - LightCollider
+  - Hookable
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - SpiderRope
   - Player
   - Chest
-  - 
+  - Hookable
   - 
   - 
   - 
@@ -56,4 +58,7 @@ TagManager:
     locked: 0
   - name: Rope
     uniqueID: 3658095917
+    locked: 0
+  - name: TopLayer
+    uniqueID: 1615110583
     locked: 0
