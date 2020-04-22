@@ -70,12 +70,16 @@
     <Compile Include="Assets\Scripts\Character\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Character\CheckpointController.cs" />
     <Compile Include="Assets\Scripts\Character\Flame\FlameController.cs" />
+    <Compile Include="Assets\Scripts\Character\LightColliderController.cs" />
+    <Compile Include="Assets\Scripts\Character\ResizeCheck.cs" />
     <Compile Include="Assets\Scripts\Character\TestScript.cs" />
     <Compile Include="Assets\Scripts\Checkpoint\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\Checkpoint\CheckpointManager.cs" />
     <Compile Include="Assets\Scripts\Colectables\ChestController.cs" />
     <Compile Include="Assets\Scripts\Colectables\FloatingTextController.cs" />
+    <Compile Include="Assets\Scripts\Colectables\TextOnTopFix.cs" />
     <Compile Include="Assets\Scripts\Colectables\WaxController.cs" />
+    <Compile Include="Assets\Scripts\Interactables\SwitchController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Rope\RoperSetter.cs" />
     <Compile Include="Assets\Scripts\Rope\SpiderRope.cs" />

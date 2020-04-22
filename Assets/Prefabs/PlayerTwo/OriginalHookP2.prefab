@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rope: {fileID: 7422712306807359248}
+  Ch: {fileID: 0}
+  ShootPoint: {fileID: 0}
 --- !u!50 &1627638703270496688
 Rigidbody2D:
   serializedVersion: 4

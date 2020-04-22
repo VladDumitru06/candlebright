@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rope: {fileID: 6063006947966055687}
+  Ch: {fileID: 0}
+  ShootPoint: {fileID: 0}
 --- !u!50 &2715791456253787047
 Rigidbody2D:
   serializedVersion: 4
@@ -150,7 +152,7 @@ MonoBehaviour:
   origin: {fileID: 0}
   line_width: 0.1
   speed: 25
-  pull_force: 4
+  pull_force: 5
   IsSwinging: 0
 --- !u!58 &6569454709674829029
 CircleCollider2D:

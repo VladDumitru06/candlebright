@@ -31,6 +31,7 @@ public class SpiderRope : MonoBehaviour
         line.startWidth = line_width; //define width
         line.endWidth = line_width; //define height
         line.material = mat; //define material
+        line.sortingOrder = 99;
     }
 
     public void setStart(Vector2 targetPos)//Set the starting position of the hook and the timer
@@ -90,23 +91,35 @@ public class SpiderRope : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
-        velocity = Vector2.zero; // Attach to the object it collided with
-        pull = true;
-        timer = reset(stayTime);
-        StartCoroutine(timer);
-        pull_force_temp = pull_force;
+        Debug.Log(collision.tag);
+        if (collision.tag == "Ground")
+            DestroyRope();
+        else
+        {
+            velocity = Vector2.zero; // Attach to the object it collided with
+            pull = true;
+            timer = reset(stayTime);
+            StartCoroutine(timer);
+            pull_force_temp = pull_force;
+
+        }
     }
     private void OnTriggerStay2D(Collider2D collision) //for extra accuracy 
     {
         if (TriggerStay == false)// run only the first execution
         {
-            velocity = Vector2.zero;
+            if (collision.tag == "Ground")
+                DestroyRope();
+            else
+            {
+                velocity = Vector2.zero;
             pull = true;
             timer = reset(stayTime);
             StartCoroutine(timer);
             pull_force_temp = pull_force;
-            TriggerStay = true; 
+            TriggerStay = true;
+
+            }
         }
 
     }

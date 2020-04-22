@@ -70,6 +70,10 @@ public class CharacterController : MonoBehaviour
         if (PlayerNr == 2)
             FatherObject.transform.position = CM.lastCheckPointPosP2;
     }
+    public void OnCollisionEnter(Collision collision)
+    {
+        
+    }
     public void Move(float move, bool crouch, bool jump, int PlayerNr)
     {
         if (PlayerNr == this.playerNr)
