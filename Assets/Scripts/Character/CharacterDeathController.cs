@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.LWRP;
+using UnityEngine.Events;
 
 public class CharacterDeathController : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class CharacterDeathController : MonoBehaviour
     [SerializeField] private GameObject Candle;
     [SerializeField] private GameObject RopeSetter;
     [SerializeField] private GameObject CandleCharacter;
+    [SerializeField] private WaxController WaxController;
     [SerializeField] private GameObject Flame;
+    public UnityEvent HasRespawned;
     private Vector2 Velocity;
     private bool isDead;
     public bool IsDead { get { return isDead; } }
@@ -30,16 +33,23 @@ public class CharacterDeathController : MonoBehaviour
         {
             Death();
         }
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && CharController.PlayerNr == 1)
+        {
+            Respawn();
+        }
+        if (Input.GetButton("Respawn") && CharController.PlayerNr == 2)
         {
             Respawn();
         }
     }
-    void Death()
+    public void Death()
     {
-        Velocity = new Vector2(0f, 0f);
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        gameObject.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y+1000f);
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         isDead = true;
         Debug.Log("I DEAD");
+        
         Candle.SetActive(false);
         RopeSetter.SetActive(false);
         Flame.SetActive(false);
@@ -60,14 +70,17 @@ public class CharacterDeathController : MonoBehaviour
     }
     void Respawn()
     {
-        Velocity = new Vector2(0f, 0f);
+        WaxController.WaxAmount = 0;
+        HasRespawned.Invoke();
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         Debug.Log("I RESPAWN");
         Candle.SetActive(true);
         RopeSetter.SetActive(true);
         Flame.SetActive(true);
         CandleCharacter.SetActive(true);
         isDead = false;
-        pointlight.transform.localScale = new Vector3(1, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
+        pointlight.transform.localScale = new Vector3(1, Candle.transform.localScale.x, pointlight.transform.localScale.z);
         Candle.transform.localScale = new Vector3(Candle.transform.localScale.x, 1, Candle.transform.localScale.z);
         if (CharController.PlayerNr == 1)
             this.transform.position = CM.lastCheckPointPosP1;

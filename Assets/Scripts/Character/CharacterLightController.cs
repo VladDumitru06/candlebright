@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering.LWRP;
 
 public class CharacterLightController : MonoBehaviour
 {
-    [SerializeField] private float resizeSpeed = .01f;
+    [SerializeField] private float lightresizeSpeed = 20f;
     [SerializeField] private Light2D pointlight;
     [SerializeField] private Transform lightPosition;
     [SerializeField] private Canvas endtext;
@@ -38,10 +38,15 @@ public class CharacterLightController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E) && Candle.transform.localScale.y >= .1f)
             {
+                //pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
                 isBursting = true;
                 //light scale
-                pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
+                if (pointlight.transform.localScale.x < 2f)
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x + lightresizeSpeed* Time.deltaTime, pointlight.transform.localScale.y);
 
+                if (pointlight.transform.localScale.y < (2f / Candle.transform.localScale.y))
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, pointlight.transform.localScale.y + ((lightresizeSpeed/Candle.transform.localScale.y) * Time.deltaTime), pointlight.transform.localScale.z);
+                
                 resizeTimer += Time.deltaTime;
                 if (resizeTimer >= 0.018f)//resize each 0.02 seconds
                 {
@@ -52,16 +57,31 @@ public class CharacterLightController : MonoBehaviour
             else
             {
                 isBursting = false;
-                pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
+                //pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
+                  if (pointlight.transform.localScale.x > Candle.transform.localScale.y)
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x - lightresizeSpeed * Time.deltaTime, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
+                   else
+                        pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
+
+                    if (pointlight.transform.localScale.y > 1f)
+                       pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, pointlight.transform.localScale.y - (lightresizeSpeed/Candle.transform.localScale.y)*Time.deltaTime, pointlight.transform.localScale.z);
+                    else
+                        pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, 1f, pointlight.transform.localScale.z);
+                
             }
         }
         if (CharacterController.PlayerNr == 2)
         {
             if (Input.GetAxis("Burst") == 1 && Candle.transform.localScale.y >= .1f)
             {
+                //pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
                 isBursting = true;
                 //light scale
-                pointlight.transform.localScale = new Vector3(2f, (2f / Candle.transform.localScale.y));
+                if (pointlight.transform.localScale.x < 2f)
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x + lightresizeSpeed * Time.deltaTime, pointlight.transform.localScale.y);
+
+                if (pointlight.transform.localScale.y < (2f / Candle.transform.localScale.y))
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, pointlight.transform.localScale.y + ((lightresizeSpeed / Candle.transform.localScale.y) * Time.deltaTime), pointlight.transform.localScale.z);
 
                 resizeTimer += Time.deltaTime;
                 if (resizeTimer >= 0.018f)//resize each 0.02 seconds
@@ -73,9 +93,18 @@ public class CharacterLightController : MonoBehaviour
             else
             {
                 isBursting = false;
-                pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
+                //pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, 1, this.pointlight.transform.localScale.z);
+                if (pointlight.transform.localScale.x > Candle.transform.localScale.y)
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x - lightresizeSpeed * Time.deltaTime, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
+                else
+                    pointlight.transform.localScale = new Vector3(Candle.transform.localScale.y, pointlight.transform.localScale.y, pointlight.transform.localScale.z);
+
+                if (pointlight.transform.localScale.y > 1f)
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, pointlight.transform.localScale.y - (lightresizeSpeed / Candle.transform.localScale.y) * Time.deltaTime, pointlight.transform.localScale.z);
+                else
+                    pointlight.transform.localScale = new Vector3(pointlight.transform.localScale.x, 1f, pointlight.transform.localScale.z);
+
             }
-           
         }
     }
 }

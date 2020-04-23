@@ -7,11 +7,12 @@ public class WaxController : MonoBehaviour
     [SerializeField] GameObject Candle;
     [SerializeField] float WaxValue = .15f;
     [SerializeField] ResizeCheck AboveCheck;
+    [SerializeField] CharacterDeathController DeathController;
     public int WaxAmount;
     
     public void UseWax()
     {
-        if (WaxAmount > 0 && Candle.transform.localScale.y < 1f && AboveCheck.CanGrow)
+        if (WaxAmount > 0 && Candle.transform.localScale.y < 1f && AboveCheck.CanGrow && !DeathController.IsDead)
         { 
             if (Candle.transform.localScale.y+WaxValue > 1f)
             {

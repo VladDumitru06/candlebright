@@ -6,7 +6,6 @@ public class CharacterMovement : MonoBehaviour
 {
     CharacterController Controller;
     [SerializeField] private float playerSpeed = 10f;
-    [SerializeField] private Canvas endtext;
     [SerializeField] private int PlayerNr;
     [SerializeField] private Animator Animator;
     [SerializeField] SpiderRope SpiderRope;
@@ -59,9 +58,9 @@ public class CharacterMovement : MonoBehaviour
         }
         else if(PlayerNr == 2)
                 {
-            Debug.Log(Input.GetAxis("VerticalMove") + " " + Input.GetAxis("HorizontalMove") + " " + Input.GetButton("UseWax") + " " + Input.GetAxis("Burst") + " " + Input.GetAxis("ShootHook"));
+          //  Debug.Log(Input.GetAxis("VerticalMove") + " " + Input.GetAxis("HorizontalMove") + " " + Input.GetButton("UseWax") + " " + Input.GetAxis("Burst") + " " + Input.GetAxis("ShootHook"));
 
-            if (Input.GetAxis("HorizontalMove") > 0.2 || Input.GetAxis("HorizontalMove") < 0.2) // Left
+            if (Input.GetAxis("HorizontalMove") > 0.2 || Input.GetAxis("HorizontalMove") < -0.2) // Left
             {
                 movementSpeed = playerSpeed * Input.GetAxis("HorizontalMove");
             }
@@ -72,6 +71,7 @@ public class CharacterMovement : MonoBehaviour
 
             if (Input.GetAxis("VerticalMove") > 0.2 )
             {
+
                 jump = true;
             }
             else
@@ -97,7 +97,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (this.transform.localScale.y <= .1f)
         {
-            endtext.enabled = true;
+            //endtext.enabled = true;
         }
         else
         {
