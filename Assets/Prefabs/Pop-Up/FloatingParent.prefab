@@ -80,7 +80,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806747195019465275}
-  m_Text: NO MORE 4 U
+  m_Text: +1Wax
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -93,7 +93,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 4beb055f07aaff244873dec698d0363e, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 2147485159
+    rgba: 2147542919
 --- !u!95 &5076363617414900063
 Animator:
   serializedVersion: 3

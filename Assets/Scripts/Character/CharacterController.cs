@@ -13,6 +13,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
     [SerializeField] public int playerNr;
     [SerializeField] private GameObject FatherObject;
+    private bool isJumping = false;
+    private bool isJumping2;
     const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
@@ -32,6 +34,7 @@ public class CharacterController : MonoBehaviour
     public BoolEvent OnCrouchEvent;
     private bool m_wasCrouching = false;
 
+    public bool IsJumping { get { return isJumping; } }
     private void Awake()
     {
         CM = GameObject.FindGameObjectWithTag("CM").GetComponent<CheckpointManager>();
@@ -58,7 +61,11 @@ public class CharacterController : MonoBehaviour
             {
                 m_Grounded = true;
                 if (!wasGrounded)
+                {
+                    isJumping2 = false;
                     OnLandEvent.Invoke();
+
+                }
             }
         }
     }
@@ -142,9 +149,18 @@ public class CharacterController : MonoBehaviour
             // If the player should jump...
             if (m_Grounded && jump)
             {
+                if (isJumping == false)
+                {
+                    isJumping = true;
+                }
                 // Add a vertical force to the player.
-                m_Grounded = false;
+               // m_Grounded = false;
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            }
+            if (isJumping2 == false)
+            {
+                isJumping2 = true;
+                isJumping = false;
             }
         }
     }

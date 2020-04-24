@@ -6,49 +6,71 @@ public class ChestController : MonoBehaviour
 {
     [SerializeField] private int WaxAmount = 1;
     [SerializeField] private float WaxValue = 0.15f;
-    bool player1 = false;
-    bool player2 = false;
+    [SerializeField] CharacterDeathController DeathControllerP1;
+    [SerializeField] CharacterDeathController DeathControllerP2;
+    public bool CanCollectWaxP1;
+    public bool CanCollectWaxP2;
     private WaxController WaxController;
     [SerializeField] GameObject FloatingPoints;
+    [FMODUnity.EventRef]
+    public string WaxPickupSound;
+    private FMOD.Studio.EventInstance WaxInstance;
+
+    private void Start()
+    {
+        WaxInstance = FMODUnity.RuntimeManager.CreateInstance(WaxPickupSound);
+        CanCollectWaxP1 = true;
+        CanCollectWaxP2 = true;
+    }
+    public void ResetWaxP1()
+    {
+        Debug.Log("RESETP1");
+        CanCollectWaxP1 = true;
+    }
+    public void ResetWaxP2()
+    {
+        Debug.Log("RESETP2");
+        CanCollectWaxP2 = true;
+
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if ((collision.tag == "Player1" || collision.tag == "Player2") && collision.gameObject.GetComponent<WaxController>())
         {
             FloatingPoints.GetComponentInChildren<TextMesh>().color = collision.GetComponentInChildren<SpriteRenderer>().color +new Color(0f,0f,0f,-0.5f);
-            if (player1 && collision.tag == "Player1")
+            if (CanCollectWaxP1 == false && collision.tag == "Player1")
             {
                 
             FloatingPoints.GetComponentInChildren<TextMesh>().text = "NO MORE 4 U";
             Instantiate<GameObject>(FloatingPoints, gameObject.transform.position, Quaternion.identity);
             }
-             if (player2 && collision.tag == "Player2")
+             if (CanCollectWaxP2 == false && collision.tag == "Player2")
             {
                 FloatingPoints.GetComponentInChildren<TextMesh>().text = "NO MORE 4 U";
                 Instantiate<GameObject>(FloatingPoints, gameObject.transform.position, Quaternion.identity);
 
             }
-             if ((!player1 && collision.tag == "Player1" )|| (!player2 && collision.tag == "Player2"))
+             if ((CanCollectWaxP1 == true && collision.tag == "Player1" )|| (CanCollectWaxP2 == true && collision.tag == "Player2"))
             {
                 FloatingPoints.GetComponentInChildren<TextMesh>().text = "+" + WaxAmount + "Wax";
                 GetWax(collision.gameObject.GetComponent<WaxController>());
                 Instantiate<GameObject>(FloatingPoints, gameObject.transform.position, Quaternion.identity);
             }
-            if (player1 && player2)
-                Destroy(gameObject, 1f);
             if (collision.tag == "Player1")
             {
-                player1 = true;
+                CanCollectWaxP1 = false;
             }
             else if (collision.tag == "Player2")
             {
-                player2 = true;
+                CanCollectWaxP2 = false;
             }
         }
 
     }
     public void GetWax(WaxController waxController)
     {
+        Debug.Log("Pickup"); 
+        WaxInstance.start();
         waxController.WaxAmount += 1;
     }
 }

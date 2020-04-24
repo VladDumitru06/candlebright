@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastCheckPointPosP1: {x: 0, y: 0}
   lastCheckPointPosP2: {x: 0, y: 0}
+  lastCheckPointSizeP1: {x: 1, y: 1, z: 1}
+  lastCheckPointSizeP2: {x: 1, y: 1, z: 1}
