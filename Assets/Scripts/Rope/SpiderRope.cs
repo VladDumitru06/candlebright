@@ -12,6 +12,8 @@ public class SpiderRope : MonoBehaviour
     [SerializeField] float line_width = .1f;// the width of the line
     [SerializeField] float speed = 25;// the speed the rope is shot with
     [SerializeField] float pull_force = 3f;// the force the rope pulls the Player
+    [FMODUnity.EventRef]
+    public string RopeGrab;
     public bool IsSwinging;
     private LineRenderer line;// the Line itself
     private float pull_force_temp;// Temporary pull force to increase while hook is attached
@@ -20,8 +22,13 @@ public class SpiderRope : MonoBehaviour
     private bool update = false; // check if update should be run
     private bool TriggerStay = false; // For OnTriggerStay2D (Better accuracy)
     private bool pull = false; // Check if the player should be pullde
+
+    private FMOD.Studio.EventInstance RopeGrabInstance;
+
+    public bool Pull { get { return pull; } }
     void Start()
     {
+        RopeGrabInstance = FMODUnity.RuntimeManager.CreateInstance(RopeGrab);
         pull_force_temp = pull_force;
         line = GetComponent<LineRenderer>(); // Create line
         if (!line)
@@ -94,8 +101,9 @@ public class SpiderRope : MonoBehaviour
         Debug.Log(collision.tag);
         if (collision.tag == "Ground")
             DestroyRope();
-        else
+        else if (collision.tag == "Hookable")
         {
+            RopeGrabInstance.start();
             velocity = Vector2.zero; // Attach to the object it collided with
             pull = true;
             timer = reset(stayTime);
@@ -110,7 +118,7 @@ public class SpiderRope : MonoBehaviour
         {
             if (collision.tag == "Ground")
                 DestroyRope();
-            else
+            else if(collision.tag == "Hookable")
             {
                 velocity = Vector2.zero;
             pull = true;

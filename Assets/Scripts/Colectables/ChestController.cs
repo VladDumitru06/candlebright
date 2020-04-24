@@ -12,9 +12,13 @@ public class ChestController : MonoBehaviour
     public bool CanCollectWaxP2;
     private WaxController WaxController;
     [SerializeField] GameObject FloatingPoints;
+    [FMODUnity.EventRef]
+    public string WaxPickupSound;
+    private FMOD.Studio.EventInstance WaxInstance;
 
     private void Start()
     {
+        WaxInstance = FMODUnity.RuntimeManager.CreateInstance(WaxPickupSound);
         CanCollectWaxP1 = true;
         CanCollectWaxP2 = true;
         DeathControllerP1.HasRespawned.AddListener(ResetWaxP1);
@@ -68,6 +72,8 @@ public class ChestController : MonoBehaviour
     }
     public void GetWax(WaxController waxController)
     {
+        Debug.Log("Pickup"); 
+        WaxInstance.start();
         waxController.WaxAmount += 1;
     }
 }

@@ -8,11 +8,18 @@ public class SwitchController : MonoBehaviour
     [SerializeField] GameObject ToMove;
     [SerializeField] float MovementSpeed = 2f;
     [SerializeField] Vector2 EndPoint;
+    [FMODUnity.EventRef]
+    public string Moving;
+    [FMODUnity.EventRef]
+    public string Button;
     Vector2 StartPoint;
     Color Red , Green;
     bool ReturnToOrigin = false;
+    private FMOD.Studio.EventInstance MovingInstance;
+    bool playonlyonce = false;
     void Start()
     {
+        MovingInstance = FMODUnity.RuntimeManager.CreateInstance(Moving);
         StartPoint = ToMove.transform.position;
         Red = new Color(.8627f, .0784f, .2352f);
         Green = new Color(.1960f, .8039f, .1960f);
@@ -25,11 +32,19 @@ public class SwitchController : MonoBehaviour
         {
             if (EndPoint.x == ToMove.transform.position.x)
             {
+
                 Debug.Log("RETURNING TO ORIGIN");
+                if (playonlyonce == false)
+                {
+                    MovingInstance.start();
+                    playonlyonce = true;
+                }
                 ToMove.transform.position = new Vector2(ToMove.transform.position.x,ToMove.transform.position.y - MovementSpeed *Time.deltaTime);
                 if (ToMove.transform.position.y == StartPoint.y)
                 {
                     ReturnToOrigin = false;
+                    playonlyonce = false;
+                    MovingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                 }
             }
         }
@@ -39,6 +54,8 @@ public class SwitchController : MonoBehaviour
 
         if (collision.tag == "LightCollider")
         {
+            MovingInstance.start();
+            FMODUnity.RuntimeManager.PlayOneShot(Button);
             Enabled();
         }
     }
@@ -55,11 +72,13 @@ public class SwitchController : MonoBehaviour
 
         if (collision.tag == "LightCollider")
         {
+            FMODUnity.RuntimeManager.PlayOneShot(Button);
             Disabled();
         }
     }
     private void Disabled()
     {
+        MovingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         ReturnToOrigin = true;
         SwitchColor.GetComponent<SpriteRenderer>().color = Red;
     }

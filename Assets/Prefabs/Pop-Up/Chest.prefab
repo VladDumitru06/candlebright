@@ -128,3 +128,4 @@ MonoBehaviour:
   CanCollectWaxP2: 0
   FloatingPoints: {fileID: 5941100925665235549, guid: 397d1781c9c87dd4982cbb8e668bfec2,
     type: 3}
+  WaxPickupSound: event:/WaxPickup

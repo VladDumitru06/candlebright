@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] CharacterLightController CharacterLight;
     [SerializeField] WaxController WaxController;
     CharacterDeathController DeathController;
+
     private float movementSpeed;
     private bool jump = false;
     private bool CanUseWax;

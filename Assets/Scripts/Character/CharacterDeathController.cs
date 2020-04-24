@@ -16,6 +16,8 @@ public class CharacterDeathController : MonoBehaviour
     [SerializeField] private GameObject CandleCharacter;
     [SerializeField] private WaxController WaxController;
     [SerializeField] private GameObject Flame;
+    [FMODUnity.EventRef]
+    public string DeathSound;
     public UnityEvent HasRespawned;
     private Vector2 Velocity;
     private bool isDead;
@@ -44,6 +46,7 @@ public class CharacterDeathController : MonoBehaviour
     }
     public void Death()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(DeathSound);
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         gameObject.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y+1000f);
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);

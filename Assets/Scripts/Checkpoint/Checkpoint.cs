@@ -13,7 +13,7 @@ public class Checkpoint : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.tag);
+
         if (collision.CompareTag("Player1")) //Player1 is found and his checkpoint location is updated
         {
             CM.lastCheckPointPosP1 = transform.position;

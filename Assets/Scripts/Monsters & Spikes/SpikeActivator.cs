@@ -7,13 +7,20 @@ public class SpikeActivator : MonoBehaviour
     [SerializeField] Animator SpikeAnimator;
     [SerializeField] CharacterDeathController DeathControllerP1;
     [SerializeField] CharacterDeathController DeathControllerP2;
+    [FMODUnity.EventRef]
+    public string Spikes;
+
 
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         if (collision.tag == "Player1" || collision.tag == "Player2")
-            SpikeAnimator.SetBool("Activated",true);
+        {
+            SpikeAnimator.SetBool("Activated", true);
+
+            FMODUnity.RuntimeManager.PlayOneShot(Spikes);
+        }
 
     
     }
@@ -29,7 +36,10 @@ public class SpikeActivator : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player1" || collision.tag == "Player2")
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(Spikes);
             SpikeAnimator.SetBool("Activated", false);
+        }
 
     }
 }

@@ -326,6 +326,9 @@ GameObject:
   - component: {fileID: 2027516047125544102}
   - component: {fileID: 3620752637904932675}
   - component: {fileID: 3620752639096212451}
+  - component: {fileID: 8578902386979632155}
+  - component: {fileID: 8578902386979632156}
+  - component: {fileID: 8578902386979632157}
   m_Layer: 10
   m_Name: PlayerTwo
   m_TagString: Player2
@@ -424,6 +427,7 @@ MonoBehaviour:
   FireAnimator: {fileID: 6297098889618110345}
   CharacterLight: {fileID: 6297098890321763216}
   WaxController: {fileID: 3620752637904932675}
+  UseWaxSound: event:/WaxUse
 --- !u!114 &6297098890321763216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e2812d221d7ce4d8560b5900016f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 100
+  m_JumpForce: 150
   m_CrouchSpeed: 1
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -473,6 +477,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2027516047125544097}
         m_MethodName: Press
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8578902386979632157}
+        m_MethodName: OnLand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -521,6 +536,7 @@ MonoBehaviour:
   CandleCharacter: {fileID: 8873083679809309756}
   WaxController: {fileID: 3620752637904932675}
   Flame: {fileID: 480865081514419003}
+  DeathSound: event:/Death
   HasRespawned:
     m_PersistentCalls:
       m_Calls: []
@@ -557,6 +573,55 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.30189848}
   m_Size: {x: 0.5, y: 0.60379696}
   m_Direction: 0
+--- !u!114 &8578902386979632155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027516047125544096}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440effffdf08c844eaf93b06c90249d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightController: {fileID: 6297098890321763216}
+  fmodEvent: event:/Burst
+  fadespeed: 100
+--- !u!114 &8578902386979632156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027516047125544096}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 286c114af5055844c99b4a1975a33231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputsound: event:/FootSteps
+  walkingspeed: 0.25
+--- !u!114 &8578902386979632157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027516047125544096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 869e6fa6efe1086478d7d65f4c7620a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FootSteps: event:/FootSteps
+  Jump: event:/Jump
+  Burst: event:/Burst
+  Land: event:/Land
+  walkingspeed: 0.25
+  LightController: {fileID: 6297098890321763216}
+  SpiderRope: {fileID: 0}
+  fadespeed: 100
 --- !u!1 &2757151892373091520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6986039147115467043}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07999999, y: -0.62, z: -0.68397593}
+  m_LocalPosition: {x: -0.07999999, y: -0.59, z: -0.68397593}
   m_LocalScale: {x: 0.04, y: 0.01, z: 1}
   m_Children: []
   m_Father: {fileID: 2027516047125544099}

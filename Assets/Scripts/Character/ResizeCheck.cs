@@ -15,13 +15,12 @@ public class ResizeCheck : MonoBehaviour
     {
         if (collision.tag != "Player")
         {
-            Debug.Log("TRUE");
             canGrow = false;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("FALSE");
+
         canGrow = true;
     }
 }
