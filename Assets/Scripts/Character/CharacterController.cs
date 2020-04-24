@@ -64,7 +64,7 @@ public class CharacterController : MonoBehaviour
                 {
                     isJumping2 = false;
                     OnLandEvent.Invoke();
-                    Debug.Log(IsJumping + "false");
+
                 }
             }
         }
@@ -152,7 +152,6 @@ public class CharacterController : MonoBehaviour
                 if (isJumping == false)
                 {
                     isJumping = true;
-                    Debug.Log(IsJumping + "true");
                 }
                 // Add a vertical force to the player.
                // m_Grounded = false;

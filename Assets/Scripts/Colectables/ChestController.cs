@@ -21,15 +21,13 @@ public class ChestController : MonoBehaviour
         WaxInstance = FMODUnity.RuntimeManager.CreateInstance(WaxPickupSound);
         CanCollectWaxP1 = true;
         CanCollectWaxP2 = true;
-        DeathControllerP1.HasRespawned.AddListener(ResetWaxP1);
-        DeathControllerP1.HasRespawned.AddListener(ResetWaxP2);
     }
-    void ResetWaxP1()
+    public void ResetWaxP1()
     {
         Debug.Log("RESETP1");
         CanCollectWaxP1 = true;
     }
-    void ResetWaxP2()
+    public void ResetWaxP2()
     {
         Debug.Log("RESETP2");
         CanCollectWaxP2 = true;
@@ -37,7 +35,6 @@ public class ChestController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if ((collision.tag == "Player1" || collision.tag == "Player2") && collision.gameObject.GetComponent<WaxController>())
         {
             FloatingPoints.GetComponentInChildren<TextMesh>().color = collision.GetComponentInChildren<SpriteRenderer>().color +new Color(0f,0f,0f,-0.5f);

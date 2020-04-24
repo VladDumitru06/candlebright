@@ -16,18 +16,32 @@ public class CharacterDeathController : MonoBehaviour
     [SerializeField] private GameObject CandleCharacter;
     [SerializeField] private WaxController WaxController;
     [SerializeField] private GameObject Flame;
+    [SerializeField] private SpiderRope SpiderRope;
     [FMODUnity.EventRef]
     public string DeathSound;
     public UnityEvent HasRespawned;
     private Vector2 Velocity;
     private bool isDead;
+    private bool playdeathonlyonce;
+    List<ChestController> ChestList;
     public bool IsDead { get { return isDead; } }
     void Start()
     {
+        ChestList = new List<ChestController>();
+        ChestListpop();
+        if (HasRespawned == null)
+            HasRespawned = new UnityEvent();
+        playdeathonlyonce = false;
         Velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         isDead = false;
     }
-
+    void ChestListpop()
+    {
+       foreach (GameObject x in GameObject.FindGameObjectsWithTag("Chest"))
+        {
+            ChestList.Add(x.GetComponent<ChestController>());
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -46,7 +60,13 @@ public class CharacterDeathController : MonoBehaviour
     }
     public void Death()
     {
-        FMODUnity.RuntimeManager.PlayOneShot(DeathSound);
+            SpiderRope.DestroyRope();
+
+        if (playdeathonlyonce == false)
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(DeathSound);
+            playdeathonlyonce = true;
+        }
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         gameObject.transform.position = new Vector2(gameObject.transform.position.x,gameObject.transform.position.y+1000f);
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
@@ -73,6 +93,21 @@ public class CharacterDeathController : MonoBehaviour
     }
     void Respawn()
     {
+        if (CharController.PlayerNr == 1)
+        {
+            foreach (GameObject x in GameObject.FindGameObjectsWithTag("Chest"))
+            {
+                x.GetComponent<ChestController>().ResetWaxP1();
+            }
+        }
+        if (CharController.PlayerNr == 2)
+        {
+            foreach (GameObject x in GameObject.FindGameObjectsWithTag("Chest"))
+            {
+                x.GetComponent<ChestController>().ResetWaxP2();
+            }
+        }
+        playdeathonlyonce = false;
         WaxController.WaxAmount = 0;
         HasRespawned.Invoke();
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -84,10 +119,15 @@ public class CharacterDeathController : MonoBehaviour
         CandleCharacter.SetActive(true);
         isDead = false;
         pointlight.transform.localScale = new Vector3(1, Candle.transform.localScale.x, pointlight.transform.localScale.z);
-        Candle.transform.localScale = new Vector3(Candle.transform.localScale.x, 1, Candle.transform.localScale.z);
         if (CharController.PlayerNr == 1)
+        {
             this.transform.position = CM.lastCheckPointPosP1;
+            Candle.transform.localScale = CM.lastCheckPointSizeP1;
+        }
         else if (CharController.PlayerNr == 2)
+        {
             this.transform.position = CM.lastCheckPointPosP2;
+            Candle.transform.localScale = CM.lastCheckPointSizeP2;
+        }
     }
 }

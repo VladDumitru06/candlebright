@@ -427,7 +427,6 @@ MonoBehaviour:
   FireAnimator: {fileID: 6297098889618110345}
   CharacterLight: {fileID: 6297098890321763216}
   WaxController: {fileID: 3620752637904932675}
-  UseWaxSound: event:/WaxUse
 --- !u!114 &6297098890321763216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +535,7 @@ MonoBehaviour:
   CandleCharacter: {fileID: 8873083679809309756}
   WaxController: {fileID: 3620752637904932675}
   Flame: {fileID: 480865081514419003}
+  SpiderRope: {fileID: 0}
   DeathSound: event:/Death
   HasRespawned:
     m_PersistentCalls:
@@ -557,6 +557,7 @@ MonoBehaviour:
   AboveCheck: {fileID: 3620752638383407780}
   DeathController: {fileID: 2027516047125544102}
   WaxAmount: 0
+  UseWaxSound: event:/WaxUse
 --- !u!70 &3620752639096212451
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

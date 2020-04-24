@@ -99,7 +99,7 @@ public class SpiderRope : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.tag);
-        if (collision.tag == "Ground")
+        if (collision.tag != "Hookable")
             DestroyRope();
         else if (collision.tag == "Hookable")
         {

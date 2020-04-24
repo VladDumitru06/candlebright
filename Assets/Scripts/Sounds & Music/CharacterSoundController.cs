@@ -101,7 +101,6 @@ public class CharacterSoundController : MonoBehaviour
     {
         if (playerismoving == true)
         {
-            Debug.Log(playerNr);
             FMODUnity.RuntimeManager.PlayOneShot(FootSteps);
         }
     }

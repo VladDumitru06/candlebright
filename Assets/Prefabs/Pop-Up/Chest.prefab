@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3355677326588582145}
   m_Layer: 11
   m_Name: Chest
-  m_TagString: Untagged
+  m_TagString: Chest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,6 +124,8 @@ MonoBehaviour:
   WaxValue: 0.15
   DeathControllerP1: {fileID: 0}
   DeathControllerP2: {fileID: 0}
+  hasrespawnedP1: 0
+  hasrespawnedP2: 0
   CanCollectWaxP1: 0
   CanCollectWaxP2: 0
   FloatingPoints: {fileID: 5941100925665235549, guid: 397d1781c9c87dd4982cbb8e668bfec2,
